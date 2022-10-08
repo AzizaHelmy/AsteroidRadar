@@ -1,6 +1,7 @@
 package com.aziza.asteroidradar.model
 
 import android.os.Parcelable
+import com.aziza.asteroidradar.ui.main.IDiffUtil
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -13,4 +14,8 @@ data class Asteroid(
     val relativeVelocity: Double,
     val distanceFromEarth: Double,
     val isPotentiallyHazardous: Boolean
-) : Parcelable
+) : Parcelable, IDiffUtil {
+    override fun getUniqueIdentifier(): Any = id
+
+    override fun getContent(): String = toString()
+}

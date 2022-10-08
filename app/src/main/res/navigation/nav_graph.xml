@@ -18,5 +18,9 @@
         android:id="@+id/detailsFragment"
         android:name="com.aziza.asteroidradar.ui.details.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="currentAsteroid"
+            app:argType="com.aziza.asteroidradar.model.Asteroid" />
+    </fragment>
 </navigation>
