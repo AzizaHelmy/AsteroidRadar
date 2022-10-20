@@ -15,9 +15,10 @@ class MainAdapter(val onClickListener: IOnCLLickListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(asteroid: Asteroid) {
-            binding.nameTv.text = asteroid.codename
-            binding.dateTv.text = asteroid.closeApproachDate
-            binding.iconIv.setImageResource(R.drawable.asteroid_safe)
+            binding.asteroid=asteroid
+//            binding.nameTv.text = asteroid.codename
+//            binding.dateTv.text = asteroid.closeApproachDate
+//            binding.iconIv.setImageResource(R.drawable.asteroid_safe)
             binding.itemLayout.setOnClickListener {
                 onClickListener.onItemClicked(asteroid)
             }

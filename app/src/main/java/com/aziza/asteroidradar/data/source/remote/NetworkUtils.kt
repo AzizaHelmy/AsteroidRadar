@@ -1,4 +1,4 @@
-package com.aziza.asteroidradar.api
+package com.aziza.asteroidradar.data.source.remote
 import android.os.Build
 import com.aziza.asteroidradar.model.Asteroid
 import com.aziza.asteroidradar.util.Constants

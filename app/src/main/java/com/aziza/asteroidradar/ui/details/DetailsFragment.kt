@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.aziza.asteroidradar.R
 import com.aziza.asteroidradar.databinding.FragmentDetailsBinding
 
 class DetailsFragment : Fragment() {
@@ -22,23 +24,27 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDetailsBinding.inflate(layoutInflater)
+        _binding?.lifecycleOwner=this
+
         return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (args != null) {
-            _binding!!.apply {
-                absoluteMagnitude.text = args.currentAsteroid.absoluteMagnitude.toString()
-                // Picasso.get().load(args.currentAsteroid).into(activityMainImageOfTheDay)
-                closeApproachDate.text = args.currentAsteroid.closeApproachDate
-                estimatedDiameter.text = args.currentAsteroid.estimatedDiameter.toString()
-                relativeVelocity.text = args.currentAsteroid.relativeVelocity.toString()
-                distanceFromEarth.text = args.currentAsteroid.distanceFromEarth.toString()
-
-            }
+            _binding!!.asteroid = args.currentAsteroid
+        }
+        _binding?.helpButton?.setOnClickListener {
+            displayAstronomicalUnitExplanationDialog()
         }
 
+    }
+
+    private fun displayAstronomicalUnitExplanationDialog() {
+        val builder = AlertDialog.Builder(requireActivity())
+            .setMessage(getString(R.string.astronomica_unit_explanation))
+            .setPositiveButton(android.R.string.ok, null)
+        builder.create().show()
     }
 
     override fun onDestroy() {
