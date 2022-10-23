@@ -1,49 +1,47 @@
 package com.aziza.asteroidradar.ui.main
 
-import androidx.lifecycle.*
-import com.aziza.asteroidradar.data.source.local.AsteroidDataBase
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.aziza.asteroidradar.data.source.repo.AsteroidRepo
 import com.aziza.asteroidradar.model.Asteroid
-import com.aziza.asteroidradar.util.Constants
-import kotlinx.coroutines.Dispatchers
+import com.aziza.asteroidradar.model.PictureOfDay
+import com.aziza.asteroidradar.util.AsteroidFilter
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class MainViewModel(val dataBase: AsteroidDataBase) : ViewModel() {
-    private val _asteroidResult = MutableLiveData<List<Asteroid>>()
-    val asteroidResult: LiveData<List<Asteroid>> = _asteroidResult
-    val asteroidList: MediatorLiveData<List<Asteroid>> = MediatorLiveData()
-    val repo: AsteroidRepo = AsteroidRepo(dataBase)
-    val pictureOfDay = repo.pictureOfDay
-    // val todayAsteroid = repo.asteroidList
+class MainViewModel(val repo: AsteroidRepo) : ViewModel() {
 
-    fun addAsteroidsToDB(asteroids: List<Asteroid>) = viewModelScope.launch {
-        //repo.addAsteroidsToDB(asteroids)
-        // _asteroidResult.postValue()
+    var asteroidResult: LiveData<List<Asteroid>> = MutableLiveData(emptyList())
+
+    private val _pictureResult = MutableLiveData<PictureOfDay>()
+    val pictureResult: LiveData<PictureOfDay> = _pictureResult
+
+    private val _asteroidFilter = MutableLiveData<AsteroidFilter>()
+    val asteroidFilter: LiveData<AsteroidFilter>
+        get() = _asteroidFilter
+
+
+    init {
+        viewModelScope.launch {
+            _pictureResult.value = repo.getPictureOfTheDay()
+            getSavedAsteroid()
+        }
     }
 
     fun getAsteroidONextWeek() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            _asteroidResult.postValue(dataBase.asteroidDao().getAllAsteroid())
-        }
-
-//        asteroidList.addSource(todayAsteroid) {
-//
-//        }
+        asteroidResult = repo.getAsteroidONextWeek()
+        _asteroidFilter.value = AsteroidFilter.WEEK_ASTEROID
     }
 
     fun getAsteroidOfToday() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            _asteroidResult.postValue(dataBase.asteroidDao().getAsteroidOfTheDay(Constants.getCurrentDate()))
-
-        }
+        asteroidResult = repo.getAsteroidOfToday()
+        _asteroidFilter.value = AsteroidFilter.TODAY_ASTEROID
     }
 
     fun getSavedAsteroid() = viewModelScope.launch {
-        withContext(Dispatchers.IO){
-            _asteroidResult.postValue(dataBase.asteroidDao().getAllAsteroid())
-
-        }
+        asteroidResult = repo.getAllAsteroid()
+        _asteroidFilter.value = AsteroidFilter.SAVED_ASTEROID
     }
 
 }

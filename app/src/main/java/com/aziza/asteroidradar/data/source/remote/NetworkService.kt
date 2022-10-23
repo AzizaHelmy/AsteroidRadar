@@ -7,9 +7,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NetworkService {
-    @GET("neo/rest/v1/feed?")
+    @GET("neo/rest/v1/feed")
     suspend fun getAllAsteroid(@Query("api_key") apiKey:String):String
-    @GET("planetary/apod?")
-    suspend fun getPictureOfDay(@Query("api_key") apiKey:String):Response<PictureOfDay>
+    @GET("planetary/apod")
+    suspend fun getPictureOfDay(@Query("api_key") apiKey:String):PictureOfDay
 
 }

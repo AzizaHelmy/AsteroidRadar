@@ -30,7 +30,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/nasa_picture_of_day_content_description_format"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{viewModel.pictureOfDay.url}" />
+                app:imageUrl="@{viewModel.pictureResult}" />
 
             <TextView
                 android:id="@+id/textView"
@@ -49,6 +49,8 @@
             android:id="@+id/asteroid_recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/black"
+            android:contentDescription="@string/this_is_nasa_s_picture_of_day_showing_nothing_yet"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,9 +59,7 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_main_image_of_the_day_layout"
             app:layout_constraintVertical_bias="0.0"
             tools:itemCount="5"
-            android:contentDescription="@string/this_is_nasa_s_picture_of_day_showing_nothing_yet"
             tools:listitem="@layout/item_asteroid_rv" />
-<!--        asteroidList="@{viewModel.asteroidList}"-->
         <ProgressBar
             android:id="@+id/status_loading_wheel"
             android:layout_width="wrap_content"

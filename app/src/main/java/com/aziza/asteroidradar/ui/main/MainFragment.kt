@@ -1,25 +1,23 @@
 package com.aziza.asteroidradar.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aziza.asteroidradar.R
-import com.aziza.asteroidradar.data.source.local.AsteroidDataBase
-import com.aziza.asteroidradar.data.source.repo.AsteroidRepo
 import com.aziza.asteroidradar.databinding.FragmentMainBinding
 import com.aziza.asteroidradar.model.Asteroid
 
 class MainFragment : Fragment(), IOnCLLickListener {
     private var _binding: FragmentMainBinding? = null
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var dataBase: AsteroidDataBase
-//    private val mainViewModel: MainViewModel by viewModels() {
-//        MainViewModelFactory(repo)
-//    }
+
+    private val mainViewModel: MainViewModel by viewModels() {
+        MainViewModelFactory(requireContext())
+    }
     private lateinit var adapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +31,7 @@ class MainFragment : Fragment(), IOnCLLickListener {
     ): View? {
 
         _binding = FragmentMainBinding.inflate(layoutInflater)
-        dataBase=AsteroidDataBase.getInstance(requireContext())
-        val factory=MainViewModelFactory(dataBase)
-        mainViewModel=ViewModelProvider(this,factory)[MainViewModel::class.java]
+
         setHasOptionsMenu(true)
         return _binding?.root
     }
@@ -43,22 +39,24 @@ class MainFragment : Fragment(), IOnCLLickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-       // getAllAsteroid()
+        getAllAsteroid()
     }
 
+    @SuppressLint("LogNotTimber")
     private fun getAllAsteroid() {
-       // mainViewModel.getAllAsteroid()
-        mainViewModel.asteroidResult.observe(requireActivity()) {
-            adapter.submitList(it)
+        Log.e("TAG", " view ")
+        mainViewModel.asteroidFilter.observe(viewLifecycleOwner) {
+            Log.e("TAG", " view2 ")
+            mainViewModel.asteroidResult.observe(viewLifecycleOwner) {
+                Log.e("TAG", " view$it ")
+                adapter.submitList(it)
+            }
         }
 
     }
 
     private fun setUpRecyclerView() {
-        _binding!!.asteroidRecycler.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = adapter
-        }
+        _binding!!.asteroidRecycler.adapter = adapter
     }
 
     override fun onDestroy() {

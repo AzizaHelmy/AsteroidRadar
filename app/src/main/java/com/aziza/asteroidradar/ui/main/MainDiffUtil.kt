@@ -14,5 +14,6 @@ class MainDiffUtil<Item : IDiffUtil> : DiffUtil.ItemCallback<Item>() {
         fun <Item : IDiffUtil> getInstance(): MainDiffUtil<Item> {
             return MainDiffUtil()
         }
+
     }
 }

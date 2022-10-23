@@ -14,14 +14,15 @@ class AsteroidRadarApp : Application() {
         super.onCreate()
 
         val constraint = Constraints.Builder()
-            .setRequiresCharging(true)
+            //.setRequiresCharging(true)
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
+
         val dailyFetchRequest = PeriodicWorkRequestBuilder<AsteroidWorker>(1, TimeUnit.DAYS)
             .setConstraints(constraint)
             .build()
-        WorkManager.getInstance()
-            .enqueueUniquePeriodicWork(Constants.WORKER_NAME, ExistingPeriodicWorkPolicy.KEEP, dailyFetchRequest)
+
+        WorkManager.getInstance().enqueueUniquePeriodicWork(Constants.WORKER_NAME, ExistingPeriodicWorkPolicy.REPLACE, dailyFetchRequest)
     }
 
 

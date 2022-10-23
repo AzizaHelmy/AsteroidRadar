@@ -6,15 +6,18 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aziza.asteroidradar.R
 import com.aziza.asteroidradar.model.Asteroid
+import com.aziza.asteroidradar.model.PictureOfDay
 import com.aziza.asteroidradar.ui.main.MainAdapter
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 @BindingAdapter("imageUrl")
-fun bindImage(imageView: ImageView, imageUrl: String?) {
-    imageUrl?.let {
-        Glide.with(imageView.context)
-            .load(imageUrl)
-            .into(imageView)
+fun bindImage(imageView: ImageView, pictureOfDay: PictureOfDay?) {
+    pictureOfDay?.let {
+            if (it.mediaType.equals("image")) {
+                Picasso.get()
+                    .load(pictureOfDay?.url)
+                    .into(imageView)
+            }
     }
 }
 
