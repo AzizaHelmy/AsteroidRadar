@@ -18,7 +18,6 @@ class AsteroidWorker(context: Context, params: WorkerParameters) :
         val repo = AsteroidRepo(dataBase)
         return try {
             repo.refreshAsteroidList()
-            Log.e("TAG", "doWork: ${repo.getPictureOfTheDay()} ", )
             Result.success()
         }catch (e:java.lang.Exception){
             Result.failure()
