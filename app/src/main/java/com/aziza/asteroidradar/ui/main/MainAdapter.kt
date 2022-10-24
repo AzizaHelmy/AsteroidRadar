@@ -20,7 +20,6 @@ class MainAdapter(val onClickListener: IOnCLLickListener) :
        val size= super.getItemCount()
         Log.e("TAG", "getItemCount:$size " )
         return size
-
     }
 
     inner class MainViewHolder(private val binding: ItemAsteroidRvBinding) :

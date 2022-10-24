@@ -14,7 +14,7 @@ class AsteroidRadarApp : Application() {
         super.onCreate()
 
         val constraint = Constraints.Builder()
-            //.setRequiresCharging(true)
+            .setRequiresCharging(true)
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
@@ -22,7 +22,7 @@ class AsteroidRadarApp : Application() {
             .setConstraints(constraint)
             .build()
 
-        WorkManager.getInstance().enqueueUniquePeriodicWork(Constants.WORKER_NAME, ExistingPeriodicWorkPolicy.REPLACE, dailyFetchRequest)
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(Constants.WORKER_NAME, ExistingPeriodicWorkPolicy.KEEP, dailyFetchRequest)
     }
 
 

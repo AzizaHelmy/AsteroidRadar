@@ -15,12 +15,6 @@ import org.json.JSONObject
 class AsteroidRepo(private val localDataBase: AsteroidDataBase) {
     val pictureOfDay: LiveData<PictureOfDay> = localDataBase.asteroidDao().getPictureOfDay()
 
-    suspend fun getAllAsteroid(): LiveData<List<Asteroid>> {
-        return withContext(Dispatchers.IO) {
-            return@withContext localDataBase.asteroidDao().getAllAsteroid()
-        }
-
-    }
 
     suspend fun refreshAsteroidList() {
         withContext(Dispatchers.IO) {
@@ -33,19 +27,6 @@ class AsteroidRepo(private val localDataBase: AsteroidDataBase) {
         }
     }
 
-    fun getAsteroidOfToday(): LiveData<List<Asteroid>> {
-        return localDataBase.asteroidDao().getAsteroidOfTheDay(Constants.getCurrentDate())
-    }
-
-     fun getAsteroidONextWeek(): LiveData<List<Asteroid>> {
-
-        return localDataBase.asteroidDao().getAsteroidTheNextWeek()
-    }
-
-    fun getSavedAsteroid():LiveData<List<Asteroid>>  {
-        return localDataBase.asteroidDao().getAllAsteroid()
-    }
-
     suspend fun getPictureOfTheDay(): PictureOfDay? {
         Log.e("TAG", "image!")
 
@@ -55,6 +36,21 @@ class AsteroidRepo(private val localDataBase: AsteroidDataBase) {
 
             return@withContext response
         }
+    }
+
+    suspend fun getAllAsteroid(): LiveData<List<Asteroid>> {
+        return withContext(Dispatchers.IO) {
+            return@withContext localDataBase.asteroidDao().getAllAsteroid()
+        }
+
+    }
+
+    fun getAsteroidOfToday(): LiveData<List<Asteroid>> {
+        return localDataBase.asteroidDao().getAsteroidOfTheDay(Constants.getCurrentDate())
+    }
+
+    fun getAsteroidONextWeek(): LiveData<List<Asteroid>> {
+        return localDataBase.asteroidDao().getAsteroidTheNextWeek()
     }
 
 

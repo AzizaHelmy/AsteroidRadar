@@ -12,23 +12,19 @@ import com.squareup.picasso.Picasso
 
 @BindingAdapter("imageUrl")
 fun bindImage(imageView: ImageView, pictureOfDay: PictureOfDay?) {
-    pictureOfDay?.let {
+    if(pictureOfDay!=null){
+        pictureOfDay?.let {
             if (it.mediaType.equals("image")) {
                 Picasso.get()
                     .load(pictureOfDay?.url)
                     .into(imageView)
             }
-    }
-}
+        }
+    }else{
 
-@BindingAdapter("asteroidList")
-fun bindRecyclerView(recyclerView: RecyclerView, asteroid: List<Asteroid>) {
-    if (asteroid.isNotEmpty()) {
-        val adapter = recyclerView.adapter as MainAdapter
-        adapter.submitList(asteroid)
     }
-}
 
+}
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {
