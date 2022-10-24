@@ -5,24 +5,27 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
 }
-File secretFile = rootProject.file("secrets.properties")
-Properties secretProperities = new Properties()
-if (secretFile.exists()) {
-    secretProperities.load(new FileInputStream(secretFile))
+
+File secretsFile = rootProject.file("secret.properties")
+Properties secretsProperties = new Properties()
+
+if (secretsFile.exists()) {
+    secretsProperties.load(new FileInputStream(secretsFile))
 }
 
 android {
     namespace 'com.aziza.asteroidradar'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.aziza.asteroidradar"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
-        // buildConfigField("String", "API_KEY", secretProperities.getProperty("API_KEY", System.getenv("API_KEY")))
+        buildConfigField("String", "API_KEY", secretsProperties.getProperty("API_KEY", System.getenv("API_KEY")))
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {

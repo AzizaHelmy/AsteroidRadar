@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aziza.asteroidradar.R
 import com.aziza.asteroidradar.databinding.FragmentMainBinding
+
 import com.aziza.asteroidradar.model.Asteroid
+import com.squareup.picasso.Picasso
 
 class MainFragment : Fragment(), IOnCLLickListener {
     private var _binding: FragmentMainBinding? = null
@@ -39,16 +41,38 @@ class MainFragment : Fragment(), IOnCLLickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
+        getPictureOfTheDay()
         getAllAsteroid()
+    }
+
+    private fun getPictureOfTheDay() {
+        mainViewModel.pictureResult.observe(viewLifecycleOwner) {
+            if(it==null){
+                _binding?.activityMainImageOfTheDay?.contentDescription=getString(R.string.this_is_nasa_s_picture_of_day_showing_nothing_yet)
+            }else{
+                if (it.mediaType.equals("image")) {
+                    _binding?.activityMainImageOfTheDay?.contentDescription=getString(R.string.nasa_picture_of_day_content_description_format,it.title)
+                    Picasso.get()
+                        .load(it.url)
+                        .into(_binding?.activityMainImageOfTheDay)
+                }else{
+                    _binding?.activityMainImageOfTheDay?.contentDescription=getString(R.string.image_of_the_day)
+
+                }
+            }
+
+        }
     }
 
     @SuppressLint("LogNotTimber")
     private fun getAllAsteroid() {
+        _binding?.statusLoadingWheel?.visibility=View.VISIBLE
         Log.e("TAG", " view ")
         mainViewModel.asteroidFilter.observe(viewLifecycleOwner) {
             Log.e("TAG", " view2 ")
             mainViewModel.asteroidResult.observe(viewLifecycleOwner) {
                 Log.e("TAG", " view$it ")
+                _binding?.statusLoadingWheel?.visibility=View.GONE
                 adapter.submitList(it)
             }
         }

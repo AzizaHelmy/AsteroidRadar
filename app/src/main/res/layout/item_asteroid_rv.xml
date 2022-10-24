@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="asteroid"
             type="com.aziza.asteroidradar.model.Asteroid" />
@@ -14,6 +13,7 @@
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         tools:background="@color/app_background">
 
         <TextView
@@ -23,6 +23,7 @@
             android:layout_margin="16dp"
             android:text="@{asteroid.codename}"
             tools:text="test"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:contentDescription="@string/nasa_picture_of_day_content_description_format"
+            android:contentDescription="@{asteroid.codename}"
             app:layout_constraintBottom_toBottomOf="@+id/date_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/date_tv"

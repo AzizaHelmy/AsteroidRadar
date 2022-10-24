@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_background">
+       >
 
         <FrameLayout
             android:id="@+id/activity_main_image_of_the_day_layout"
@@ -29,7 +29,6 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{viewModel.pictureResult}"
                 app:srcCompat="@drawable/placeholder_picture_of_day" />
 
             <TextView
@@ -44,11 +43,11 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </FrameLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/asteroid_recycler"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:contentDescription="@string/this_is_nasa_s_picture_of_day_showing_nothing_yet"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

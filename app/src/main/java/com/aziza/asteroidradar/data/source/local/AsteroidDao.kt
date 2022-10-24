@@ -20,10 +20,10 @@ interface AsteroidDao {
         return insertAllAsteroid(asteroid)
     }
 
-    @Query("select * from Asteroid where closeApproachDate<=:date order by closeApproachDate Asc")
+    @Query("select * from Asteroid where closeApproachDate=:date order by closeApproachDate Asc")
     fun getAsteroidOfTheDay(date: String): LiveData<List<Asteroid>>
 
-    @Query("select * from Asteroid where closeApproachDate between date() and date('now','+7days') order by closeApproachDate ASc ")
+    @Query("select * from Asteroid where closeApproachDate between date() and  date('now','+7 days') order by closeApproachDate ASc ")
     fun getAsteroidTheNextWeek(): LiveData<List<Asteroid>>
 
     @Query("Delete from Asteroid")
