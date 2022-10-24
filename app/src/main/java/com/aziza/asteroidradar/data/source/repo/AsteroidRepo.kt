@@ -14,8 +14,6 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 class AsteroidRepo(private val localDataBase: AsteroidDataBase) {
-    val pictureOfDay: LiveData<PictureOfDay> = localDataBase.asteroidDao().getPictureOfDay()
-
 
     suspend fun refreshAsteroidList() {
         withContext(Dispatchers.IO) {
@@ -23,12 +21,10 @@ class AsteroidRepo(private val localDataBase: AsteroidDataBase) {
             val json = JSONObject(asteroid)
             val data = parseAsteroidsJsonResult(json)
             localDataBase.asteroidDao().updateData(data)
-            Log.e("TAG", "refreshAsteroidList: $data")
         }
     }
 
     suspend fun getPictureOfTheDay(): PictureOfDay? {
-        Log.e("TAG", "image!")
 
         return withContext(Dispatchers.IO) {
             val response =

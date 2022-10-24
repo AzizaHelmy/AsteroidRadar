@@ -67,9 +67,7 @@ class MainFragment : Fragment(), IOnCLLickListener {
     @SuppressLint("LogNotTimber")
     private fun getAllAsteroid() {
         _binding?.statusLoadingWheel?.visibility=View.VISIBLE
-        Log.e("TAG", " view ")
         mainViewModel.asteroidFilter.observe(viewLifecycleOwner) {
-            Log.e("TAG", " view2 ")
             mainViewModel.asteroidResult.observe(viewLifecycleOwner) {
                 Log.e("TAG", " view$it ")
                 _binding?.statusLoadingWheel?.visibility=View.GONE
